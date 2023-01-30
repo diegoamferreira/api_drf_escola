@@ -226,7 +226,7 @@ class CursosViewSet(viewsets.ModelViewSet):
             response['Location'] = request.build_absolute_uri() + id
             return response
 ```
-
+___
 # CORS
 
 Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (
@@ -241,3 +241,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 ```
+___
+# Upload Files
+Like a Django we just need add an Image Field and then set it in the serializer
+
