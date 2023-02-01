@@ -9,12 +9,6 @@ class AlunoSerializer(serializers.ModelSerializer):
         fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'foto']
 
 
-class AlunoSerializerV2(serializers.ModelSerializer):
-    class Meta:
-        model = Aluno
-        fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'celular', 'foto']
-
-
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
@@ -45,3 +39,9 @@ class ListaAlunosMatriculadosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Matricula
         fields = ['aluno_nome']
+
+
+class AlunoSerializerV2(serializers.ModelSerializer):
+    class Meta:
+        model = Aluno
+        fields = ['id', 'nome', 'celular', 'rg', 'cpf', 'data_nascimento', 'foto']

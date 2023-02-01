@@ -226,7 +226,9 @@ class CursosViewSet(viewsets.ModelViewSet):
             response['Location'] = request.build_absolute_uri() + id
             return response
 ```
+
 ___
+
 # CORS
 
 Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (
@@ -241,7 +243,48 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 ```
+
 ___
+
 # Upload Files
+
 Like a Django we just need add an Image Field and then set it in the serializer
 
+___
+
+# i18n - Languages
+
+Just add `django.middleware.locale.LocaleMiddleware` to the middlewares list to receive the `Accept-Language` header from
+requests and automatically respond with the language specified in the header.
+
+___
+# XML on DRF
+We can add XML parser & render to response content.
+```
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework_xml.parsers.XMLParser',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
+    ],
+```
+
+# Tests
+Extend APITestCase to test, check methods, responses, object creation, etc.
+```
+    def setUp(self):
+        self.list_url = reverse('Cursos-list')
+        self.curso_1 = Curso.objects.create(
+            codigo_curso='CTT1', descricao='Curso teste 1', nivel='B'
+        )
+        self.curso_2 = Curso.objects.create(
+            codigo_curso='CTT2', descricao='Curso teste 2', nivel='A'
+        )
+        
+    def test_requisicao_get_para_listar_cursos(self):
+        """Teste para verificar a requisição GET para listar os cursos"""
+        response = self.client.get(self.list_url)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+```

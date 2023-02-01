@@ -1,9 +1,11 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import viewsets, generics, status
 from rest_framework.response import Response
 
 from escola.models import Aluno, Curso, Matricula
-from escola.serializer import AlunoSerializer, CursoSerializer, MatriculaSerializer, ListaMatriculasAlunoSerializer, \
-    ListaAlunosMatriculadosSerializer, AlunoSerializerV2
+from escola.serializer import AlunoSerializer, AlunoSerializerV2, CursoSerializer, MatriculaSerializer, \
+    ListaMatriculasAlunoSerializer, ListaAlunosMatriculadosSerializer
 
 
 class AlunosViewSet(viewsets.ModelViewSet):
@@ -13,13 +15,15 @@ class AlunosViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.version == 'v2':
             return AlunoSerializerV2
-        return AlunoSerializer
+        else:
+            return AlunoSerializer
 
 
 class CursosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os cursos"""
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
+    http_method_names = ['get', 'post', 'put', 'path']
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -35,7 +39,11 @@ class MatriculaViewSet(viewsets.ModelViewSet):
     """Listando todas as matrículas"""
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializer
-    http_method_names = ['get', 'post', 'put', 'patch']
+    http_method_names = ['get', 'post', 'put', 'path']
+
+    @method_decorator(cache_page(20))
+    def dispatch(self, *args, **kwargs):
+        return super(MatriculaViewSet, self).dispatch(*args, **kwargs)
 
 
 class ListaMatriculasAluno(generics.ListAPIView):

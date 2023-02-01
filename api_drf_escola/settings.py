@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'api_drf_escola.urls'
@@ -128,19 +129,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #################
 REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',
-    'DEFAULT_PERMISSIONS_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.DjangoModelPermissions'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication'
-    ],
+    # 'DEFAULT_PERMISSIONS_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    #     'rest_framework.permissions.DjangoModelPermissions'
+    # ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.BasicAuthentication'
+    # ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '2/second',
+        'anon': '123/second',
         'user': '1000/day'
     }
 }
@@ -149,3 +150,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
