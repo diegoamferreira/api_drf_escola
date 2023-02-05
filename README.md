@@ -23,16 +23,15 @@ https://cursos.alura.com.br/course/api-django-3-validacoes-buscas-filtros-deploy
 * Run seed.py to create fake data
 
 ```
-git clone https://github.com/diegoamferreira/djangorest.git
-cd djangorest
+git clone https://github.com/diegoamferreira/api_drf_escola.git
+cd api_drf_escola
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
 # Django
 python manage.py migrate
-python manage.py createsuperuser --email="admin@email.com"
-python manage.py test
+python manage.py createsuperuser
 python manage.py runserver
 ```
 
